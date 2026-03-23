@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>🌸 日本行程 3月 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #e8637c;
+      --light-pink: #fce8ed;
+      --mid-pink: #f4a0b0;
+      --dark: #2a2a2a;
+      --bg: #fff6f8;
+      --card: #ffffff;
+      --gray: #888;
+      --light-gray: #f5f5f5;
+      --blue: #4285f4;
+      --purple: #7c5cbf;
+      --green: #34a853;
+      --shadow: 0 2px 16px rgba(232,99,124,0.12);
+      --radius: 14px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, #e8637c 0%, #f4929f 50%, #f8b4be 100%);
+      color: white;
+      padding: 20px 16px 14px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      box-shadow: 0 3px 20px rgba(232,99,124,0.45);
+    }
+    .header-title {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+    }
+    .header-sub {
+      font-size: 11px;
+      opacity: 0.88;
+      margin-top: 3px;
+      letter-spacing: 1px;
+    }
+
+    /* ── Hotel Banner ── */
+    .hotel-banner {
+      background: linear-gradient(135deg, #5b4fcf, #8b6ed4);
+      color: white;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .hotel-info { flex: 1; }
+    .hotel-label { font-size: 10px; opacity: 0.8; letter-spacing: 1px; text-transform: uppercase; }
+    .hotel-name { font-size: 16px; font-weight: 700; margin-top: 2px; }
+    .hotel-map-btn {
+      background: rgba(255,255,255,0.22);
+      color: white;
+      border-radius: 20px;
+      padding: 6px 13px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    /* ── Day Tabs ── */
+    .tabs-wrapper {
+      position: sticky;
+      top: 76px;
+      z-index: 100;
+      background: white;
+      border-bottom: 1.5px solid #f0dde2;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .tabs {
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab {
+      flex: 0 0 auto;
+      padding: 9px 14px 8px;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      text-align: center;
+      color: #aaa;
+      transition: all 0.25s;
+      min-width: 60px;
+    }
+    .tab.active { border-bottom-color: var(--pink); color: var(--pink); }
+    .tab-date { font-size: 15px; font-weight: 700; display: block; }
+    .tab-label { font-size: 9px; display: block; margin-top: 1px; }
+    .tab.active .tab-date { color: var(--pink); }
+
+    /* ── Content ── */
+    .content { padding: 14px 14px 80px; max-width: 580px; margin: 0 auto; }
+    .day-section { display: none; }
+    .day-section.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── Day Hero Card ── */
+    .day-hero {
+      background: linear-gradient(135deg, var(--light-pink) 0%, #fff 70%);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      border: 1.5px solid #f7d5dc;
+    }
+    .day-hero-top { display: flex; align-items: center; gap: 10px; }
+    .day-emoji { font-size: 26px; }
+    .day-hero h2 { font-size: 17px; font-weight: 700; color: var(--pink); }
+    .day-hero p { font-size: 12px; color: var(--gray); margin-top: 2px; }
+    .day-hero-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+    .tag {
+      background: var(--light-pink);
+      color: var(--pink);
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .tag.blue { background: #e8f0fe; color: #4285f4; }
+    .tag.green { background: #e6f4ea; color: #34a853; }
+    .tag.purple { background: #ede7f6; color: #7c5cbf; }
+
+    /* ── Timeline ── */
+    .timeline { position: relative; padding-left: 26px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 11px; top: 6px; bottom: 10px; width: 2px;
+      background: linear-gradient(to bottom, var(--pink), #f7d5dc, #f0f0f0);
+      border-radius: 2px;
+    }
+
+    .event { position: relative; margin-bottom: 10px; }
+
+    .event-dot {
+      position: absolute;
+      left: -19px; top: 9px;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--pink);
+      border: 2.5px solid white;
+      box-shadow: 0 0 0 2px var(--pink);
+      z-index: 1;
+    }
+
+    .event.transit .event-dot {
+      width: 7px; height: 7px;
+      left: -16px; top: 11px;
+      background: #ddd;
+      box-shadow: 0 0 0 1.5px #ddd;
+    }
+
+    .event-card {
+      background: white;
+      border-radius: 12px;
+      padding: 11px 13px;
+      box-shadow: var(--shadow);
+      border: 1px solid #fde8ed;
+    }
+    .event.transit .event-card {
+      background: #fafafa;
+      box-shadow: none;
+      border-color: #efefef;
+      padding: 7px 11px;
+    }
+
+    .event-time {
+      font-size: 11px;
+      color: var(--pink);
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .event.transit .event-time { color: #bbb; }
+
+    .event-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark);
+      line-height: 1.4;
+    }
+    .event.transit .event-name { font-size: 11px; color: #bbb; font-weight: 400; }
+
+    .event-note {
+      font-size: 11px;
+      color: var(--gray);
+      margin-top: 5px;
+      line-height: 1.55;
+      background: #fafafa;
+      border-radius: 8px;
+      padding: 5px 8px;
+      border-left: 2px solid var(--light-pink);
+    }
+
+    .map-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 8px;
+      padding: 5px 11px;
+      background: linear-gradient(135deg, #4285f4, #5b9cf6);
+      color: white;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.12s, box-shadow 0.12s;
+      box-shadow: 0 2px 8px rgba(66,133,244,0.3);
+    }
+    .map-btn:active { transform: scale(0.94); }
+    .map-btn svg { width: 11px; height: 11px; fill: white; }
+
+    /* ── Must-visit tab ── */
+    .must-grid { display: flex; flex-direction: column; gap: 8px; }
+    .must-card {
+      background: white;
+      border-radius: 12px;
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+      border: 1px solid #fde8ed;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .must-icon { font-size: 20px; flex-shrink: 0; }
+    .must-text { flex: 1; }
+    .must-name { font-size: 13px; font-weight: 600; color: var(--dark); }
+    .must-day { font-size: 10px; color: var(--gray); margin-top: 2px; }
+    .must-map {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: #e8f0fe;
+      color: #4285f4;
+      text-decoration: none;
+      flex-shrink: 0;
+      font-size: 14px;
+    }
+
+    /* ── Section Divider ── */
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gray);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin: 16px 0 8px 2px;
+    }
+
+    /* ── Free Day ── */
+    .free-day {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--gray);
+    }
+    .free-day .emoji { font-size: 48px; margin-bottom: 12px; }
+    .free-day h3 { font-size: 16px; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
+    .free-day p { font-size: 13px; line-height: 1.7; }
+
+    /* ── Petals ── */
+    .petal-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
+    .petal {
+      position: absolute;
+      top: -20px;
+      font-size: 12px;
+      opacity: 0;
+      animation: petalFall linear infinite;
+    }
+    @keyframes petalFall {
+      0%   { opacity: 0; transform: translateY(0) rotate(0deg) translateX(0); }
+      10%  { opacity: 0.6; }
+      90%  { opacity: 0.3; }
+      100% { opacity: 0; transform: translateY(100vh) rotate(720deg) translateX(30px); }
+    }
+
+    /* ── Bottom note ── */
+    .bottom-note {
+      text-align: center;
+      padding: 20px;
+      color: #ccc;
+      font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Petals -->
+<div class="petal-container" id="petals"></div>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-title">🌸 日本旅行 2026</div>
+  <div class="header-sub">3月24日 ～ 3月30日 ・ 7日間</div>
+</div>
+
+<!-- Hotel Banner -->
+<div class="hotel-banner">
+  <div class="hotel-info">
+    <div class="hotel-label">🏨 住宿飯店</div>
+    <div class="hotel-name">Hotel B-Girl</div>
+  </div>
+  <a class="hotel-map-btn" href="https://maps.google.com/?q=Hotel+B-Girl+池袋+東京" target="_blank">
+    📍 地圖
+  </a>
+</div>
+
+<!-- Tabs -->
+<div class="tabs-wrapper">
+  <div class="tabs" id="tabs">
+    <div class="tab active" onclick="switchDay(0)"><span class="tab-date">3/24</span><span class="tab-label">Day 1</span></div>
+    <div class="tab" onclick="switchDay(1)"><span class="tab-date">3/25</span><span class="tab-label">Day 2</span></div>
+    <div class="tab" onclick="switchDay(2)"><span class="tab-date">3/26</span><span class="tab-label">Day 3</span></div>
+    <div class="tab" onclick="switchDay(3)"><span class="tab-date">3/27</span><span class="tab-label">Day 4</span></div>
+    <div class="tab" onclick="switchDay(4)"><span class="tab-date">3/28</span><span class="tab-label">Day 5</span></div>
+    <div class="tab" onclick="switchDay(5)"><span class="tab-date">3/29</span><span class="tab-label">Day 6</span></div>
+    <div class="tab" onclick="switchDay(6)"><span class="tab-date">3/30</span><span class="tab-label">Day 7</span></div>
+    <div class="tab" onclick="switchDay(7)"><span class="tab-date">📋</span><span class="tab-label">必去</span></div>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- ══ DAY 1 ══ -->
+  <div class="day-section active" id="day-0">
+    <div class="day-hero">
+      <div class="day-hero-top">
+        <div class="day-emoji">✈️</div>
+        <div>
+          <h2>Day 1 ・ 抵達日本</h2>
+          <p>3月24日（星期二）・ 吉祥寺 → 新宿 → 池袋</p>
+        </div>
+      </div>
+      <div class="day-hero-tags">
+        <span class="tag">🌸 吉祥寺</span>
+        <span class="tag purple">🎨 我英大交流展</span>
+        <span class="tag blue">🛍️ 池袋</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">10:35</div>
+          <div class="event-name">✈️ 抵達日本</div>
+          <a class="map-btn" href="https://maps.google.com/?q=成田国際空港" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event transit">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🚌 行車約 53 分鐘 → 池袋</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">12:35</div>
+          <div class="event-name">🏨 抵達住宿・寄放行李</div>
+          <a class="map-btn" href="https://maps.google.com/?q=Hotel+B-Girl+池袋+東京" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Hotel B-Girl
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">13:35</div>
+          <div class="event-name">🎨 吉祥寺・我英 Plaza</div>
+          <div class="event-note">預計待 30～40 分鐘</div>
+          <a class="map-btn" href="https://maps.google.com/?q=吉祥寺+僕のヒーローアカデミア+Plaza" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event transit">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🚶 步行約 10 分鐘</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">14:25</div>
+          <div class="event-name">🌸 井之頭公園看櫻花</div>
+          <div class="event-note">預計待約 30 分鐘，有時間可以再回去 plaza</div>
+          <a class="map-btn" href="https://maps.google.com/?q=井の頭恩賜公園" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event transit">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🚃 行車約 40 分鐘 → 新宿</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">15:00</div>
+          <div class="event-name">🎭 新宿・我英大交流展</div>
+          <div class="event-note">預計待 1～1.5 小時</div>
+          <a class="map-btn" href="https://maps.google.com/?q=新宿+僕のヒーローアカデミア+大交流展" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event transit">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🚃 行車約 30 分鐘 → 池袋</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">17:00</div>
+          <div class="event-name">🏙️ 回到池袋</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">17:30</div>
+          <div class="event-name">⚔️ 鏈鋸人王子飯店 (太陽城)</div>
+          <div class="event-note">保留 1 小時時間，但應該不會待這麼久</div>
+          <a class="map-btn" href="https://maps.google.com/?q=サンシャインシティ+池袋" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            太陽城 Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">18:30 ～ 19:30</div>
+          <div class="event-name">🛍️ 萬代店 (太陽城)</div>
+          <div class="event-note">去完鏈鋸人可以在太陽城逛一下</div>
+          <a class="map-btn" href="https://maps.google.com/?q=バンダイ+サンシャインシティ+池袋" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🎪 Seria (太陽城)</div>
+          <a class="map-btn" href="https://maps.google.com/?q=セリア+サンシャインシティ+池袋" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">19:30 ～</div>
+          <div class="event-name">🎮 Round1 池袋店</div>
+          <div class="event-note">開到很晚！</div>
+          <a class="map-btn" href="https://maps.google.com/?q=ラウンドワン+池袋" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🎤 防風鐵人カラオケ</div>
+          <div class="event-note">開到很晚！</div>
+          <a class="map-btn" href="https://maps.google.com/?q=カラオケ鉄人+池袋" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🪆 夾娃娃・獲得脹相</div>
+          <a class="map-btn" href="https://maps.google.com/?q=UFOキャッチャー+池袋" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🍜 吃晚餐・無敵家</div>
+          <a class="map-btn" href="https://maps.google.com/?q=無敵家+池袋" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ DAY 2 ══ -->
+  <div class="day-section" id="day-1">
+    <div class="day-hero">
+      <div class="day-hero-top">
+        <div class="day-emoji">🐋</div>
+        <div>
+          <h2>Day 2 ・ 八景島 & 橫濱</h2>
+          <p>3月25日（星期三）・ 池袋 → 八景島 → 橫濱 → 池袋</p>
+        </div>
+      </div>
+      <div class="day-hero-tags">
+        <span class="tag">🐟 八景島</span>
+        <span class="tag blue">📚 Jump Shop</span>
+        <span class="tag green">🛍️ 池袋</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">08:13</div>
+          <div class="event-name">🌅 出門</div>
+          <div class="event-note">晚點出門就是晚一點到而已</div>
+        </div>
+      </div>
+
+      <div class="event transit">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🚃 路程約 1 小時 47 分鐘 → 八景島</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">10:00</div>
+          <div class="event-name">🐋 八景島・我英 Event</div>
+          <div class="event-note">買我英商品、吃飯、跟阿水握手！裡面都可以買。預計逛 2～3 小時</div>
+          <a class="map-btn" href="https://maps.google.com/?q=横浜八景島シーパラダイス" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event transit">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🚃 行車約 1 小時 → 橫濱</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">14:00</div>
+          <div class="event-name">📚 橫濱 Jump Shop</div>
+          <div class="event-note">預計待 1 小時</div>
+          <a class="map-btn" href="https://maps.google.com/?q=ジャンプショップ+横浜" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event transit">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🚶 步行約 12 分鐘</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">15:00 ～ 15:15</div>
+          <div class="event-name">📖 文豪・太空樂園</div>
+          <div class="event-note">買完就走，約 15 分鐘</div>
+          <a class="map-btn" href="https://maps.google.com/?q=文豪ストレイドッグス+横浜" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event transit">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🚃 行車約 1 小時 15 分鐘 → 池袋</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">16:45</div>
+          <div class="event-name">🏙️ 回到池袋</div>
+          <div class="event-note">看看要繼續在池袋逛還是去新宿大交流展</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">16:45 ～</div>
+          <div class="event-name">🎬 銀魂 JR (私單)</div>
+          <div class="event-note">自由安排在池袋</div>
+          <a class="map-btn" href="https://maps.google.com/?q=池袋+銀魂+JR" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🛍️ eeo store (私單)</div>
+          <a class="map-btn" href="https://maps.google.com/?q=eeo+store+池袋" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">📦 池袋 Animate</div>
+          <a class="map-btn" href="https://maps.google.com/?q=アニメイト池袋本店" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ DAY 3 ══ -->
+  <div class="day-section" id="day-2">
+    <div class="day-hero">
+      <div class="day-hero-top">
+        <div class="day-emoji">🌸</div>
+        <div>
+          <h2>Day 3 ・ 自由行程</h2>
+          <p>3月26日（星期四）・ 自由探索東京</p>
+        </div>
+      </div>
+      <div class="day-hero-tags">
+        <span class="tag">✨ 自由活動</span>
+        <span class="tag blue">🗺️ 東京</span>
+      </div>
+    </div>
+
+    <div class="free-day">
+      <div class="emoji">🌸</div>
+      <h3>自由行程日</h3>
+      <p>今天沒有特定安排，可以自由探索池袋周邊，補逛想去的地方，或是好好休息！</p>
+    </div>
+
+    <div class="section-title">附近推薦</div>
+    <div class="must-grid">
+      <div class="must-card">
+        <div class="must-icon">📦</div>
+        <div class="must-text">
+          <div class="must-name">池袋 Animate 本店</div>
+          <div class="must-day">全日本最大 Animate</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=アニメイト池袋本店" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">🎮</div>
+        <div class="must-text">
+          <div class="must-name">Round1 池袋店</div>
+          <div class="must-day">夾娃娃・遊戲機</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=ラウンドワン+池袋" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">📚</div>
+        <div class="must-text">
+          <div class="must-name">池袋 Jump Shop</div>
+          <div class="must-day">週刊少年 Jump 週邊</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=ジャンプショップ+池袋" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">🍜</div>
+        <div class="must-text">
+          <div class="must-name">無敵家</div>
+          <div class="must-day">池袋名店拉麵</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=無敵家+池袋" target="_blank">📍</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ DAY 4 ══ -->
+  <div class="day-section" id="day-3">
+    <div class="day-hero">
+      <div class="day-hero-top">
+        <div class="day-emoji">🎨</div>
+        <div>
+          <h2>Day 4 ・ 澀谷</h2>
+          <p>3月27日（星期五）・ 澀谷 一日遊</p>
+        </div>
+      </div>
+      <div class="day-hero-tags">
+        <span class="tag">☕ 多聞咖啡廳</span>
+        <span class="tag blue">📚 Jump Shop</span>
+        <span class="tag purple">🖼️ 原畫展</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">07:00</div>
+          <div class="event-name">☕ 多聞春夏秋冬・澀谷</div>
+          <div class="event-note">鏈鋸人主題咖啡廳</div>
+          <a class="map-btn" href="https://maps.google.com/?q=多聞春夏秋冬+渋谷" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">📚 澀谷 Jump Shop</div>
+          <a class="map-btn" href="https://maps.google.com/?q=ジャンプショップ+渋谷" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">📦 澀谷 Animate</div>
+          <a class="map-btn" href="https://maps.google.com/?q=アニメイト渋谷" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">17:00</div>
+          <div class="event-name">🖼️ 防風原畫展</div>
+          <div class="event-note">鏈鋸人原畫展示</div>
+          <a class="map-btn" href="https://maps.google.com/?q=チェンソーマン+原画展+渋谷" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ DAY 5 ══ -->
+  <div class="day-section" id="day-4">
+    <div class="day-hero">
+      <div class="day-hero-top">
+        <div class="day-emoji">🎪</div>
+        <div>
+          <h2>Day 5 ・ Anime Japan 2026</h2>
+          <p>3月28日（星期六）・ 東京ビッグサイト</p>
+        </div>
+      </div>
+      <div class="day-hero-tags">
+        <span class="tag">🎪 AJ 2026</span>
+        <span class="tag blue">🏟️ 東京Big Sight</span>
+        <span class="tag green">📚 Jump Shop</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">07:00</div>
+          <div class="event-name">🌅 出發</div>
+        </div>
+      </div>
+
+      <div class="event transit">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🚃 約 1 小時 → 東京ビッグサイト</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">08:00</div>
+          <div class="event-name">🎪 抵達 Anime Japan 2026</div>
+          <div class="event-note">9:00 ～ 9:30 之間開始入場</div>
+          <a class="map-btn" href="https://maps.google.com/?q=東京ビッグサイト" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            東京ビッグサイト
+          </a>
+        </div>
+      </div>
+
+      <div class="section-title" style="padding-left:0;margin-top:14px;">AJ 攤位清單</div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">⚡ AJ SR-GYM ブース</div>
+          <div class="event-note">按照訂單多寡優先前往</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🏢 AJ 東宝ブース (Toho)</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🎵 AJ キングレコードブース</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🎯 AJ YTE ブース</div>
+        </div>
+      </div>
+
+      <div class="event transit">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🚃 行車約 1 小時 → 池袋</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">📚 池袋 Jump Shop</div>
+          <a class="map-btn" href="https://maps.google.com/?q=ジャンプショップ+池袋" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ DAY 6 ══ -->
+  <div class="day-section" id="day-5">
+    <div class="day-hero">
+      <div class="day-hero-top">
+        <div class="day-emoji">🗼</div>
+        <div>
+          <h2>Day 6 ・ 晴空塔</h2>
+          <p>3月29日（星期日）・ 晴空塔 → 池袋</p>
+        </div>
+      </div>
+      <div class="day-hero-tags">
+        <span class="tag">🗼 晴空塔</span>
+        <span class="tag purple">⚔️ 咒術廻戰</span>
+        <span class="tag blue">☕ 多聞咖啡</span>
+      </div>
+    </div>
+
+    <div class="timeline">
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">10:00 ～ 18:00</div>
+          <div class="event-name">🗼 晴空塔・咒術廻戰 Plaza 抽選</div>
+          <div class="event-note">根據 plaza 抽選時間決定行程順序</div>
+          <a class="map-btn" href="https://maps.google.com/?q=東京スカイツリータウン" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            東京スカイツリー
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">⚔️ 晴空塔・鏈鋸人 Plaza</div>
+          <a class="map-btn" href="https://maps.google.com/?q=東京スカイツリータウン+チェンソーマン" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">📚 晴空塔・Jump Shop</div>
+          <a class="map-btn" href="https://maps.google.com/?q=ジャンプショップ+東京スカイツリー" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🌿 晴空塔・樹村</div>
+          <a class="map-btn" href="https://maps.google.com/?q=東京スカイツリータウン+ソラマチ" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="event transit">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-name">🚃 路程約 40 分鐘 → 池袋</div>
+        </div>
+      </div>
+
+      <div class="event">
+        <div class="event-dot"></div>
+        <div class="event-card">
+          <div class="event-time">19:15</div>
+          <div class="event-name">☕ 池袋・多聞咖啡廳</div>
+          <div class="event-note">鏈鋸人主題咖啡廳・池袋店</div>
+          <a class="map-btn" href="https://maps.google.com/?q=多聞+池袋+カフェ" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            Google Maps
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ DAY 7 ══ -->
+  <div class="day-section" id="day-6">
+    <div class="day-hero">
+      <div class="day-hero-top">
+        <div class="day-emoji">✈️</div>
+        <div>
+          <h2>Day 7 ・ 回程</h2>
+          <p>3月30日（星期一）・ 再見日本！</p>
+        </div>
+      </div>
+      <div class="day-hero-tags">
+        <span class="tag">✈️ 回台灣</span>
+      </div>
+    </div>
+
+    <div class="free-day">
+      <div class="emoji">✈️</div>
+      <h3>平安回家！</h3>
+      <p>旅行的最後一天，整理行李，前往機場。<br>帶著滿滿的回憶和戰利品出發 🌸</p>
+    </div>
+
+    <div class="section-title">機場交通</div>
+    <div class="must-grid">
+      <div class="must-card">
+        <div class="must-icon">🛫</div>
+        <div class="must-text">
+          <div class="must-name">成田國際機場</div>
+          <div class="must-day">池袋 → 成田 約 1 小時</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=成田国際空港" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">🛬</div>
+        <div class="must-text">
+          <div class="must-name">羽田空港</div>
+          <div class="must-day">池袋 → 羽田 約 50 分</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=羽田空港" target="_blank">📍</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 必去清單 ══ -->
+  <div class="day-section" id="day-7">
+    <div class="day-hero">
+      <div class="day-hero-top">
+        <div class="day-emoji">📋</div>
+        <div>
+          <h2>必去清單</h2>
+          <p>整趟旅程一定要打卡的地方</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="must-grid">
+      <div class="must-card">
+        <div class="must-icon">⚔️</div>
+        <div class="must-text">
+          <div class="must-name">鏈鋸人王子飯店</div>
+          <div class="must-day">Day 1 ・ 池袋太陽城</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=サンシャインシティ+池袋" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">🎤</div>
+        <div class="must-text">
+          <div class="must-name">防風鐵人カラオケ</div>
+          <div class="must-day">Day 1 ・ 池袋</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=カラオケ鉄人+池袋" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">🎮</div>
+        <div class="must-text">
+          <div class="must-name">Round1 池袋店</div>
+          <div class="must-day">Day 1 ・ 池袋</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=ラウンドワン+池袋" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">🐋</div>
+        <div class="must-text">
+          <div class="must-name">我英・八景島 Event</div>
+          <div class="must-day">Day 2 ・ 横浜八景島</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=横浜八景島シーパラダイス" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">🖼️</div>
+        <div class="must-text">
+          <div class="must-name">防風原畫展</div>
+          <div class="must-day">Day 4 ・ 澀谷</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=チェンソーマン+原画展+渋谷" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">📚</div>
+        <div class="must-text">
+          <div class="must-name">池袋 Jump Shop</div>
+          <div class="must-day">Day 3・5 ・ 池袋</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=ジャンプショップ+池袋" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">🎪</div>
+        <div class="must-text">
+          <div class="must-name">Anime Japan 2026</div>
+          <div class="must-day">Day 5 ・ 東京ビッグサイト</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=東京ビッグサイト" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">🎨</div>
+        <div class="must-text">
+          <div class="must-name">我英・大交流展 新宿</div>
+          <div class="must-day">Day 1 ・ 新宿</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=新宿+僕のヒーローアカデミア+大交流展" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">🌸</div>
+        <div class="must-text">
+          <div class="must-name">我英 Plaza・吉祥寺</div>
+          <div class="must-day">Day 1 ・ 吉祥寺</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=吉祥寺+ヒロアカ+plaza" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">🗼</div>
+        <div class="must-text">
+          <div class="must-name">晴空塔・咒術廻戰 Plaza</div>
+          <div class="must-day">Day 6 ・ 晴空塔</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=東京スカイツリータウン+呪術廻戦" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">⚔️</div>
+        <div class="must-text">
+          <div class="must-name">晴空塔・鏈鋸人 Plaza</div>
+          <div class="must-day">Day 6 ・ 晴空塔</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=東京スカイツリータウン+チェンソーマン" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">📚</div>
+        <div class="must-text">
+          <div class="must-name">晴空塔・Jump Shop</div>
+          <div class="must-day">Day 6 ・ 晴空塔</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=ジャンプショップ+東京スカイツリー" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">📦</div>
+        <div class="must-text">
+          <div class="must-name">池袋 Animate 本店</div>
+          <div class="must-day">Day 2 ・ 池袋</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=アニメイト池袋本店" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">🛍️</div>
+        <div class="must-text">
+          <div class="must-name">橫濱 Jump Shop</div>
+          <div class="must-day">Day 2 ・ 横浜</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=ジャンプショップ+横浜" target="_blank">📍</a>
+      </div>
+      <div class="must-card">
+        <div class="must-icon">☕</div>
+        <div class="must-text">
+          <div class="must-name">多聞咖啡廳・池袋 & 澀谷</div>
+          <div class="must-day">Day 4 澀谷 / Day 6 池袋</div>
+        </div>
+        <a class="must-map" href="https://maps.google.com/?q=多聞+池袋+カフェ" target="_blank">📍</a>
+      </div>
+    </div>
+
+    <div class="bottom-note">Made with 💕 for your Japan trip 🌸</div>
+  </div>
+
+</div>
+
+<script>
+  // Tab switching
+  function switchDay(index) {
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', i === index);
+    });
+    document.querySelectorAll('.day-section').forEach((s, i) => {
+      s.classList.toggle('active', i === index);
+    });
+    // Scroll tab into view
+    const tabs = document.getElementById('tabs');
+    const activeTab = tabs.children[index];
+    activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    // Scroll content to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Falling petals
+  (function createPetals() {
+    const container = document.getElementById('petals');
+    const petals = ['🌸', '🌺', '🌸', '🌸'];
+    for (let i = 0; i < 12; i++) {
+      const el = document.createElement('div');
+      el.className = 'petal';
+      el.textContent = petals[i % petals.length];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.animationDuration = (8 + Math.random() * 10) + 's';
+      el.style.animationDelay = (Math.random() * 15) + 's';
+      el.style.fontSize = (10 + Math.random() * 8) + 'px';
+      container.appendChild(el);
+    }
+  })();
+</script>
+
+</body>
+</html>
