@@ -121,6 +121,13 @@ a{color:inherit}
 .petal-container{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
 .petal{position:absolute;top:-20px;font-size:14px;opacity:0;animation:petalFall linear infinite}
 @keyframes petalFall{0%{opacity:0;transform:translateY(0) rotate(0)}10%{opacity:.8}90%{opacity:.4}100%{opacity:0;transform:translateY(100vh) rotate(360deg) translateX(30px)}}
+
+/* 會動的龍 */
+.dragon{display:inline-block;transform-origin:50% 80%;animation:dragonDance 2.4s ease-in-out infinite}
+.dragon.big{animation:dragonFly 2.2s ease-in-out infinite}
+@keyframes dragonDance{0%,100%{transform:rotate(-10deg) translateY(0)}25%{transform:rotate(8deg) translateY(-3px) scale(1.12)}50%{transform:rotate(-6deg) translateY(0)}75%{transform:rotate(10deg) translateY(-2px) scale(1.08)}}
+@keyframes dragonFly{0%,100%{transform:translate(0,0) rotate(-6deg)}25%{transform:translate(3px,-5px) rotate(6deg) scale(1.1)}50%{transform:translate(0,-2px) rotate(-4deg)}75%{transform:translate(-3px,-5px) rotate(8deg) scale(1.1)}}
+@media (prefers-reduced-motion:reduce){.dragon{animation:none}}
 </style>
 </head>
 <body>
@@ -129,7 +136,7 @@ a{color:inherit}
 <div class="header" id="hd">
   <div class="header-title"><span>🚗</span> 日本佐賀自駕 <span>⭐</span></div>
   <div class="header-sub">10月11日 ～ 10月18日 ・ 8天7夜</div>
-  <div class="seg" id="seg"><button data-v="plan" class="on">🗓 行程</button><button data-v="wl">🐉 威龍的朝聖清單</button></div>
+  <div class="seg" id="seg"><button data-v="plan" class="on">🗓 行程</button><button data-v="wl"><span class="dragon">🐉</span> 威龍的朝聖清單</button></div>
 </div>
 
 <div id="dt" class="tabs-wrapper"><div class="tabs" id="tabs"></div></div>
@@ -352,7 +359,7 @@ function renderWL(){
   const done = Object.values(wlDone).filter(Boolean).length;
   let id = 0;
   document.getElementById("wlpage").innerHTML = `
-  <div class="day-hero"><div class="day-hero-top"><div class="day-emoji">🐉</div><div><h2>威龍的朝聖清單</h2><p>10/16 天神・博多車站　10/17 博多運河城</p></div></div>
+  <div class="day-hero"><div class="day-hero-top"><div class="day-emoji"><span class="dragon big">🐉</span></div><div><h2>威龍的朝聖清單</h2><p>10/16 天神・博多車站　10/17 博多運河城</p></div></div>
     <div class="prog"><div class="bar"><i style="width:${wlTotal?done/wlTotal*100:0}%"></i></div><span>已打卡 ${done} / ${wlTotal}</span></div></div>` +
   WL.map(sec=>`
     <div class="wl-sec"><div class="wl-head"><span class="tag">📅 ${esc(sec.day)}</span><h3>${esc(sec.area)}</h3></div><div class="wl-hint">${esc(sec.hint)}</div>` +
