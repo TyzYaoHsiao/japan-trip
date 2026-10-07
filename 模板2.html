@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#4fc3dc">
-<title>🌊 日本佐賀自駕 2026</title>
+<meta name="theme-color" content="#7fd8c3">
+<title>🚗 日本佐賀自駕 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
@@ -128,44 +128,13 @@ a{color:inherit}
 @keyframes dragonDance{0%,100%{transform:rotate(-10deg) translateY(0)}25%{transform:rotate(8deg) translateY(-3px) scale(1.12)}50%{transform:rotate(-6deg) translateY(0)}75%{transform:rotate(10deg) translateY(-2px) scale(1.08)}}
 @keyframes dragonFly{0%,100%{transform:translate(0,0) rotate(-6deg)}25%{transform:translate(3px,-5px) rotate(6deg) scale(1.1)}50%{transform:translate(0,-2px) rotate(-4deg)}75%{transform:translate(-3px,-5px) rotate(8deg) scale(1.1)}}
 @media (prefers-reduced-motion:reduce){.dragon{animation:none}}
-/* ===== 海浪主題 ===== */
-:root{--ink:#1f3b57;--cream:#e6f7ff;--mint:#5ec8dd;--sky:#8ec5ff;--sun:#ffd966;--coral:#ff9aa2;--lav:#e3e4ff;--peach:#fff1d9;--skyl:#dff3ff;--mintl:#d4f4f6;--gray:#5f7b94;--blue:#2f7df6}
-body{background-color:#d9f2fb;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='32' viewBox='0 0 64 32'%3E%3Cpath d='M0 16 Q16 2 32 16 T64 16' fill='none' stroke='white' stroke-opacity='.75' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"),linear-gradient(180deg,#eaf9ff 0%,#cdeefa 55%,#a9ddf1 100%);background-size:64px 32px,100% 100%;background-attachment:scroll,fixed}
-.header{background:linear-gradient(135deg,#4fc3dc 0%,#5aa9f0 100%)}
-.header-sub{background:#fff6c2}
-.seg button.on{background:#ffe066}
-.tab.active{background:#ffc9a8}
-.day-hero{background:linear-gradient(160deg,#b8e4ff 0%,#8fd3ee 100%)}
-.event.stay .event-card{background:#e3e4ff}
-.event.meal .event-card{background:#fff1d9}
-.event-dot{background:#ffe066}
-.event.meal .event-dot{background:var(--coral)}
-.overview summary{background:#ffe066}
-.info-date{background:#ffc9a8}
-.bar i{background:linear-gradient(90deg,#5ec8dd,#2f9de6)}
-.wl-item input:checked+.box{background:#5ec8dd}
-.wl-item .fav{background:#ffc9a8}
-.timeline::before{opacity:.5}
-
-/* 海浪 */
-.waves{position:fixed;left:0;right:0;bottom:0;height:120px;z-index:0;pointer-events:none}
-.wave{position:absolute;left:0;right:0;bottom:0;background-repeat:repeat-x;background-size:1200px 100%}
-.wave.w1{height:100px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100' preserveAspectRatio='none'%3E%3Cpath d='M0 40 Q150 0 300 40 T600 40 T900 40 T1200 40 V100 H0 Z' fill='%23a9ddf1'/%3E%3C/svg%3E");animation:waveMove 14s linear infinite;opacity:.9}
-.wave.w2{height:80px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100' preserveAspectRatio='none'%3E%3Cpath d='M0 40 Q150 0 300 40 T600 40 T900 40 T1200 40 V100 H0 Z' fill='%237fc8ea'/%3E%3C/svg%3E");animation:waveMove 9s linear infinite reverse}
-.wave.w3{height:56px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 100' preserveAspectRatio='none'%3E%3Cpath d='M0 40 Q150 0 300 40 T600 40 T900 40 T1200 40 V100 H0 Z' fill='%235ab4e0'/%3E%3C/svg%3E");animation:waveMove 6s linear infinite}
-@keyframes waveMove{from{background-position-x:0}to{background-position-x:1200px}}
-/* 泡泡往上飄 */
-.petal{top:auto;bottom:-20px;animation-name:bubbleUp}
-@keyframes bubbleUp{0%{opacity:0;transform:translateY(0) translateX(0)}10%{opacity:.85}90%{opacity:.4}100%{opacity:0;transform:translateY(-100vh) translateX(24px)}}
-@media (prefers-reduced-motion:reduce){.wave{animation:none}}
 </style>
 </head>
 <body>
-<div class="waves"><div class="wave w1"></div><div class="wave w2"></div><div class="wave w3"></div></div>
 <div class="petal-container" id="petals"></div>
 
 <div class="header" id="hd">
-  <div class="header-title"><span>🚗</span> 日本佐賀自駕 <span>🌊</span></div>
+  <div class="header-title"><span>🚗</span> 日本佐賀自駕 <span>⭐</span></div>
   <div class="header-sub">10月11日 ～ 10月18日 ・ 8天7夜</div>
   <div class="seg" id="seg"><button data-v="plan" class="on">🗓 行程</button><button data-v="wl"><span class="dragon">🐉</span> 威龍的朝聖清單</button></div>
 </div>
@@ -429,7 +398,7 @@ document.getElementById("seg").onclick = e=>{
 
 // 櫻花
 const pc=document.getElementById("petals");
-for(let i=0;i<14;i++){const p=document.createElement("div");p.className="petal";p.textContent=["🫧","🐟","🐚","🫧","🐠","⭐"][i%6];
+for(let i=0;i<14;i++){const p=document.createElement("div");p.className="petal";p.textContent=["⭐","✨","☁️","🍡"][i%4];
   p.style.left=Math.random()*100+"%";p.style.animationDuration=(7+Math.random()*7)+"s";p.style.animationDelay=(Math.random()*8)+"s";pc.appendChild(p)}
 
 // 旅行期間自動跳到當天；其他日子顯示上次看的那天
