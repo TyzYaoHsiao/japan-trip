@@ -96,6 +96,17 @@ a{color:inherit}
 .prog{margin-top:12px;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800}
 .bar{flex:1;height:14px;border-radius:99px;background:#fff;border:2.5px solid var(--ink);overflow:hidden}
 .bar i{display:block;height:100%;background:var(--coral);border-right:2.5px solid var(--ink);transition:width .3s}
+.goal-btn{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:8px 16px;background:var(--coral);color:var(--ink);border:2.5px solid var(--ink);border-radius:999px;font:800 14px inherit;font-family:inherit;box-shadow:2px 2px 0 var(--ink);cursor:pointer}
+.goal-btn:active{transform:translate(2px,2px);box-shadow:none}
+.modal{position:fixed;inset:0;z-index:500;background:rgba(31,59,87,.55);display:none;align-items:center;justify-content:center;padding:16px}
+.modal.on{display:flex}
+.modal-box{position:relative;width:100%;max-width:480px;max-height:90vh;overflow:auto;background:#fff;border:3px solid var(--ink);border-radius:24px;box-shadow:5px 5px 0 var(--ink);padding:16px}
+.modal-box h3{font-size:18px;font-weight:900;margin-bottom:4px}
+.modal-x{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;border:2.5px solid var(--ink);background:var(--sun);font:900 16px inherit;font-family:inherit;cursor:pointer}
+.goal-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.goal-cards.one{grid-template-columns:1fr}
+.goal-cards figure{margin:0;text-align:center;font-size:11px;font-weight:700;color:var(--gray)}
+.goal-cards img{display:block;width:100%;border:2.5px solid var(--ink);border-radius:12px;box-shadow:2px 2px 0 var(--ink);margin-bottom:6px;background:#fff}
 .wl-sec{margin-bottom:24px}
 .wl-head{display:flex;align-items:center;gap:8px}
 .wl-head h3{font-size:19px;font-weight:900}
@@ -111,6 +122,8 @@ a{color:inherit}
 .wl-item input:checked+.box::after{content:"✓";font-weight:900;font-size:16px}
 .wl-item .fl{flex:0 0 auto;min-width:2.4em;text-align:center;background:var(--sun);border:2px solid var(--ink);border-radius:999px;padding:0 7px;font-size:12px;font-weight:900}
 .wl-item .nm{flex:1;font-size:15px;font-weight:800}
+.wl-item .ic{display:inline-block;width:1.15em;height:1.15em;vertical-align:-.2em;margin-right:5px}
+.ic svg{width:100%;height:100%;display:block}
 .wl-item .nm small{display:block;font-size:12px;color:var(--gray);font-weight:600}
 .wl-item.done .nm{text-decoration:line-through;opacity:.5}
 .wl-item .fav{display:inline-block;margin-top:6px;padding:6px 12px;border-radius:999px;background:var(--coral);color:var(--ink);border:2.5px solid var(--ink);font-size:12.5px;font-weight:800;text-decoration:none;box-shadow:2px 2px 0 var(--ink)}
@@ -178,6 +191,12 @@ body{background-color:#d9f2fb;background-image:url("data:image/svg+xml,%3Csvg xm
   <div id="wlpage" style="display:none"></div>
 </div>
 
+<div class="modal" id="goal"><div class="modal-box">
+  <button class="modal-x" data-close aria-label="關閉">✕</button>
+  <h3>🎯 威龍此次目標</h3>
+  <div id="goalbody"></div>
+</div></div>
+
 <script>
 const PIN = '<svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>';
 const gm = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
@@ -188,8 +207,8 @@ const mapBtn = (url,label="Google Maps") => `<a class="map-btn" href="${esc(url)
 const STAY = [
   {d:"10/11（日）– 10/13（二）", n:"2 晚", area:"長崎", name:"長崎 Airbnb 民宿", map:"https://maps.app.goo.gl/vXqQ3iDCMjiwxVGfA", note:"停車：TOP24パーキング シグマ目覚町Ⅱ（Mapcode 262 059 306*57）"},
   {d:"10/13（二）– 10/15（四）", n:"2 晚", area:"佐世保", name:"させぼ旅の宿 Kawashimo En", map:"https://maps.app.goo.gl/iy5iFdT3yZwfpYhK8", note:"Mapcode 89 080 309*21"},
-  {d:"10/15（四）– 10/17（六）", n:"2 晚", area:"福岡（春日）", name:"福岡 Airbnb 民宿（Kasuga）", map:"https://maps.app.goo.gl/aAzqzrMiaaKTCGFw8", note:""},
-  {d:"10/17（六）– 10/18（日）", n:"1 晚", area:"鳥栖", name:"鳥栖 Airbnb 民宿（Tosu）", map:"https://maps.app.goo.gl/MFbc5doFAK7HcqPz7", note:"2103-1 Fujinokimachi, Tosu, Saga 841-0048"},
+  {d:"10/15（四）– 10/17（六）", n:"2 晚", area:"福岡（春日）", name:"福岡 Airbnb 民宿（Kasuga）", map:"https://maps.app.goo.gl/aAzqzrMiaaKTCGFw8", note:"Mapcode 13 144 707*08"},
+  {d:"10/17（六）– 10/18（日）", n:"1 晚", area:"鳥栖", name:"鳥栖 Airbnb 民宿（Tosu）", map:"https://maps.app.goo.gl/MFbc5doFAK7HcqPz7", note:"2103-1 Fujinokimachi, Tosu, Saga 841-0048\nMapcode 37 707 293*3"},
 ];
 
 const CAR = {
@@ -203,13 +222,13 @@ const CAR = {
 const DAYS = [
  {e:"✈️", d:"10/11 日", t:"D1 · 佐賀 → 長崎", items:[
   ["07:10-10:35", "桃園機場-佐賀機場", "第一航廈7號櫃台\n起飛前2.5小時開櫃、45分鐘關櫃\n1小時前至48小時內自助報到", "佐賀空港", "", "", "", null, []],
-  ["12:00", "TOYOTA Rent a Car\nトヨタレンタカー 佐賀空港店", "營業時間：\n09:00–19:00", "", "", "", "car", "pickup", []],
+  ["12:00–12:30", "TOYOTA Rent a Car\nトヨタレンタカー 佐賀空港店", "營業時間：\n09:00–19:00", "", "", "", "car", "pickup", []],
   ["", "↓ 交通 1 小時", "", "", "", "", "drive", null, []],
   ["13:30–16:30", "祐德稻荷神社", "本殿需爬約117階樓梯，但設有付費電梯（每人300日圓，8:30～16:30），搭乘還能獲得開運天然石，對長者與行動不便者相當友善。", "祐徳稲荷神社", "https://www.yutokusan.jp/", "祐徳稲荷神社駐車場\nMapcode：461 598 008*07\n+81954622151", "", null, []],
   ["", "午餐：竹屋食堂", "營業時間：\n12:00–15:00\n只收現金", "https://maps.app.goo.gl/KM46vD2gLSqN2Euv9", "", "", "meal", null, []],
   ["", "海鮮丼専門店佐助", "營業時間：\n11:00–15:00", "https://maps.app.goo.gl/4G3WV9N5Qkj56Rzy7", "", "Sasuke\nMapcode：104 087 013*31\n+81954680608", "meal", null, []],
   ["", "↓ 交通 20 分鐘", "", "", "", "", "drive", null, []],
-  ["16:50", "大魚神社 海中鳥居", "採收季節？", "大魚神社 海中鳥居", "https://saga-tara.com/oojinjakaichutorii/", "海中鳥居駐車場\nMapcode：325 696 286*04", "", null, [["潮汐時間", "https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=OU"]]],
+  ["16:50–17:30", "大魚神社 海中鳥居", "採收季節？", "大魚神社 海中鳥居", "https://saga-tara.com/oojinjakaichutorii/", "海中鳥居駐車場\nMapcode：325 696 286*04", "", null, [["潮汐時間", "https://www.data.jma.go.jp/kaiyou/db/tide/suisan/suisan.php?stn=OU"]]],
   ["", "↓ 交通 1 小時 30 分鐘", "", "", "", "", "drive", null, []],
   ["19:00", "住宿(長崎)", "", "", "", "TOP24パーキング シグマ目覚町Ⅱ\nMapcode：262 059 306*57\n08:00–20:00\n30分/100円\n20:00–08:00\n60分/100円\n最大料金600円\nTOP24パーキング シグマ目覚町\nMapcode：262 059 304*10\n08:00–20:00\n30分/100円\n20:00–08:00\n60分/100円\n最大料金600円", "stay", 0, []],
   ["", "晚餐", "飲茶カフェ 猪八戒\nBISHNU\n串燒 安兵衛(週日公休)\n焼鳥 龍(週日公休)\nラーメン·ちゃんぽん 桃太郎(週日公休)", "", "", "", "meal", null, []],
@@ -217,14 +236,14 @@ const DAYS = [
  {e:"🐧", d:"10/12 一", t:"D2 · 長崎市區", items:[
   ["08:30", "住宿(長崎)", "", "", "", "", "stay", 0, []],
   ["", "↓", "", "", "", "", "drive", null, []],
-  ["08:30", "長崎原爆資料館", "營業時間：\n08:30–18:30", "長崎原爆資料館", "https://nabmuseum.jp/", "原爆資料館停車場\nMapcode：262 089 243*25\n第一小時100円\n後續30分/100円", "", null, []],
+  ["08:30–10:30", "長崎原爆資料館", "營業時間：\n08:30–18:30", "長崎原爆資料館", "https://nabmuseum.jp/", "原爆資料館停車場\nMapcode：262 089 243*25\n第一小時100円\n後續30分/100円", "", null, []],
   ["", "↓", "", "", "", "", "drive", null, []],
-  ["10:30", "未來長崎COCOWALK", "營業時間：\n10:00–20:00", "未来長崎ココウォーク", "https://cocowalk.jp/", "TOP24パーキング 目覚町宅建協会横\nMapcode：262 059 124*83\n+81958474457\n08:00–20:00\n30分/100円\n20:00–08:00\n60分/100円\n最大料金600円", "", null, []],
+  ["10:30–12:30", "未來長崎COCOWALK", "營業時間：\n10:00–20:00", "未来長崎ココウォーク", "https://cocowalk.jp/", "TOP24パーキング 目覚町宅建協会横\nMapcode：262 059 124*83\n+81958474457\n08:00–20:00\n30分/100円\n20:00–08:00\n60分/100円\n最大料金600円", "", null, []],
   ["12:30", "午餐", "", "未来長崎ココウォーク", "", "", "meal", null, []],
   ["", "↓ 交通 30 分鐘", "", "", "", "", "drive", null, []],
-  ["13:00", "長崎企鵝水族館", "營業時間：\n09:00–17:00", "長崎ペンギン水族館", "https://penguin-aqua.jp/", "長崎ペンギン水族館第１駐車場\nMapcode：44 308 465*04\n+81958383131\n第一小時260円\n後續60分/200円", "", null, []],
+  ["13:00–15:00", "長崎企鵝水族館", "營業時間：\n09:00–17:00", "長崎ペンギン水族館", "https://penguin-aqua.jp/", "長崎ペンギン水族館第１駐車場\nMapcode：44 308 465*04\n+81958383131\n第一小時260円\n後續60分/200円", "", null, []],
   ["", "↓ 交通 30 分鐘", "", "", "", "", "drive", null, []],
-  ["15:30", "長崎浜町商店街", "", "長崎 浜町アーケード", "", "思案橋停車場\nMapcode：44 240 657*60\n+81958260379\n07:00–20:00\n30分/150円\n最大料金1000円\n20:00–07:00\n30分/150円\n最大料金800円", "", null, []],
+  ["15:30–18:30", "長崎浜町商店街", "", "長崎 浜町アーケード", "", "思案橋停車場\nMapcode：44 240 657*60\n+81958260379\n07:00–20:00\n30分/150円\n最大料金1000円\n20:00–07:00\n30分/150円\n最大料金800円", "", null, []],
   ["18:30", "晚餐", "", "長崎 浜町 レストラン", "", "", "meal", null, []],
   ["", "↓ 交通 20 分鐘", "", "", "", "", "drive", null, []],
   ["18:50", "稻佐山山頂展望台", "營業時間：\n09:00–22:00\n半山腰→軌道車→展望台，軌道車來回500日圓\n淵神社→纜車→展望台，纜車來回1900日圓\n恢復運行→", "稲佐山山頂展望台", "https://inasayama.info/", "稲佐山公園駐車場\nMapcode：262 028 582*76", "", null, [["2026年10月3日（星期六）- B線（長崎港側）", "https://inasayama.info/20261003-2/"]]],
@@ -234,9 +253,9 @@ const DAYS = [
  {e:"🎢", d:"10/13 二", t:"D3 · 豪斯登堡", items:[
   ["08:30", "住宿(長崎)", "←最晚出發時間", "", "", "", "stay", 0, []],
   ["", "↓ 交通 40 分鐘", "", "", "", "", "drive", null, []],
-  ["", "休息點：\nMaxvalu Kinkai Shop", "營業時間：\n07:00–00:00", "Maxvalu Kinkai Shop", "", "Maxvalu Kinkai Shop\nMapcode：262 409 378*67\n+81958840230", "", null, []],
+  ["09:10–09:30", "休息點：\nMaxvalu Kinkai Shop", "營業時間：\n07:00–00:00", "Maxvalu Kinkai Shop", "", "Maxvalu Kinkai Shop\nMapcode：262 409 378*67\n+81958840230", "", null, []],
   ["", "↓ 交通 40 分鐘", "", "", "", "", "drive", null, []],
-  ["10:10", "豪斯登堡", "營業時間：\n10:00–21:00\n離園時間 18:10", "ハウステンボス", "https://chinese01.huistenbosch.co.jp/", "豪斯登堡駐車場(第1)\nMapcode：307 320 554*45\n+81570064110", "", null, []],
+  ["10:10–18:10", "豪斯登堡", "營業時間：\n10:00–21:00\n離園時間 18:10", "ハウステンボス", "https://chinese01.huistenbosch.co.jp/", "豪斯登堡駐車場(第1)\nMapcode：307 320 554*45\n+81570064110\n1500円/次", "", null, []],
   ["", "午餐", "", "", "", "", "meal", null, []],
   ["", "↓ 交通 30 分鐘", "", "", "", "", "drive", null, []],
   ["", "住宿(佐世保)", "水月\nKaisen Restaurant\nDining your HERO,s\nTakumi Restaurant", "", "", "させぼ旅の宿 Kawashimo En\nMapcode：89 080 309*21", "stay", 1, []],
@@ -245,9 +264,9 @@ const DAYS = [
  {e:"🚢", d:"10/14 三", t:"D4 · 九十九島・佐世保", items:[
   ["", "住宿(佐世保)", "", "", "", "", "stay", 1, []],
   ["", "↓ 交通 15 分鐘", "", "", "", "", "drive", null, []],
-  ["10:00", "九十九島遊覽船\n珍珠皇后號", "營業時間：\n09:00–17:00\n出航時刻表：10:00~15:00，一小時一班，50分鐘", "九十九島パールシーリゾート", "https://www.99cruising.jp/zh_TW/variation/pearl-queen/", "九十九島珍珠海洋遊覽區 第１停車場\nMapcode：307 546 868*55\n+81956284187", "", null, [["九十九島珍珠海洋遊覽區 第１停車場", "https://www.pearlsea.jp/zh_TW/access/"]]],
+  ["10:00–11:00", "九十九島遊覽船\n珍珠皇后號", "營業時間：\n09:00–17:00\n出航時刻表：10:00~15:00，一小時一班，50分鐘", "九十九島パールシーリゾート", "https://www.99cruising.jp/zh_TW/variation/pearl-queen/", "九十九島珍珠海洋遊覽區 第１停車場\nMapcode：307 546 868*55\n+81956284187", "", null, [["九十九島珍珠海洋遊覽區 第１停車場", "https://www.pearlsea.jp/zh_TW/access/"]]],
   ["", "↓同地方↓", "", "", "", "", "drive", null, []],
-  ["11:00", "九十九島水族館\n海閃閃", "營業時間：\n09:00–18:00\n如希望再入館，\n請在出口處讓工作人員在手背上按下印章即可\n海豚表演：10:20、13:20、15:20", "九十九島水族館 海きらら", "https://www.umikirara.jp/zh_TW/", "or\n九十九島珍珠海洋遊覽區 第３停車場\nMapcode：307 547 844*37\n+81956284187", "", null, [["九十九島珍珠海洋遊覽區 第３停車場", "https://www.pearlsea.jp/zh_TW/access/"]]],
+  ["11:00–13:00", "九十九島水族館\n海閃閃", "營業時間：\n09:00–18:00\n如希望再入館，\n請在出口處讓工作人員在手背上按下印章即可\n海豚表演：10:20、13:20、15:20", "九十九島水族館 海きらら", "https://www.umikirara.jp/zh_TW/", "or\n九十九島珍珠海洋遊覽區 第３停車場\nMapcode：307 547 844*37\n+81956284187", "", null, [["九十九島珍珠海洋遊覽區 第３停車場", "https://www.pearlsea.jp/zh_TW/access/"]]],
   ["", "↓ 交通 15 分鐘", "", "", "", "", "drive", null, []],
   ["", "佐世保四之町商店街", "", "佐世保 四ヶ町商店街", "https://yonkacho.com/illustmap/", "Tono 100 En Parking Lot\nMapcode：307 582 636*38\n+81958163000\n08:00–20:00\n30分/100円\n最大料金1000円\n20:00–08:00\n60分/100円\n最大料金600円", "", null, []],
   ["", "午餐：\n佐世保漢堡 BigMan 上京町總店", "營業時間：\n09:00–19:30", "佐世保バーガー BigMan 上京町本店", "https://www.sasebo-bigman.jp/", "", "meal", null, []],
@@ -258,49 +277,49 @@ const DAYS = [
  {e:"🦑", d:"10/15 四", t:"D5 · 呼子・糸島 → 福岡", items:[
   ["07:30", "住宿(佐世保)", "←最晚出發時間", "", "", "", "stay", 1, []],
   ["", "↓ 交通 1 小時", "", "", "", "", "drive", null, []],
-  ["08:30", "休息站：\n伊萬里 故鄉村", "營業時間：\n09:00–18:00", "道の駅 伊万里ふるさと村", "", "休息站伊萬里 故鄉村\nMapcode：104 816 232*05\n+81955242252", "", null, []],
+  ["08:30–08:50", "休息站：\n伊萬里 故鄉村", "營業時間：\n09:00–18:00", "道の駅 伊万里ふるさと村", "", "道の駅 駐車場 (道の駅 伊万里)\nMapcode：104 816 172*40", "", null, []],
   ["", "↓ 交通 40 分鐘", "", "", "", "", "drive", null, []],
-  ["09:30", "呼子朝市", "營業時間：\n07:30–12:00\n呼子朝市在十點之後大多店家因為商品已經售罄，\n紛紛開始收攤，街市上的人潮和攤商也會開始減少", "呼子朝市", "https://www.karatsu-kankou.jp/", "臨港駐車場\nMapcode：182 722 104*50", "", null, []],
+  ["09:30–11:30", "呼子朝市", "營業時間：\n07:30–12:00\n呼子朝市在十點之後大多店家因為商品已經售罄，\n紛紛開始收攤，街市上的人潮和攤商也會開始減少", "呼子朝市", "https://www.karatsu-kankou.jp/", "臨港駐車場\nMapcode：182 722 104*50", "", null, []],
   ["", "↓同地方↓", "", "", "", "", "drive", null, []],
-  ["11:30", "七ツ釜遊覽船 イカ丸", "營業時間：\n09:20–16:40\n出航時刻表：09:30~16:30，一小時一班，40分鐘", "七ツ釜遊覧船 イカ丸", "https://www.marinepal-yobuko.co.jp/", "or\nYobukofureai Parking Lot\nMapcode：182 692 890*43", "", null, []],
-  ["", "↓ 交通 20 分鐘", "", "", "", "", "drive", null, []],
-  ["12:30", "唐津城", "營業時間：\n09:00–17:00", "唐津城", "", "唐津城收費停車場\nMapcode：182 402 737*30\n+81955748887", "", null, []],
-  ["", "↓ 交通 1 小時", "", "", "", "", "drive", null, []],
-  ["15:30", "手工花鹽布丁", "營業時間：\n10:00–17:00\n有免費停車場，但是位子不多，\n旁邊有一次300日圓的停車，\n工作人員會問你要不要等還是要付費", "又市の塩 製塩所 糸島", "", "Mataichinoshio Seiensho Senyo Parking Lot\nMapcode：182 866 581*43\n+819071588931", "", null, []],
+  ["11:30–12:30", "七ツ釜遊覽船 イカ丸", "營業時間：\n09:20–16:40\n確認航運狀況！很重要！\n出航時刻表：09:30~16:30，一小時一班，40分鐘", "七ツ釜遊覧船 イカ丸", "https://www.marinepal-yobuko.co.jp/", "呼子ふれあいパーキング\nMapcode：182 692 890*43\n60分/100円\n最大料金500円", "", null, []],
   ["", "↓ 交通 30 分鐘", "", "", "", "", "drive", null, []],
-  ["16:30", "桜井二見ヶ浦 夫婦岩", "", "桜井二見ヶ浦 夫婦岩", "", "Itoshima City Futamigaura Parking Lot\nMapcode：224 788 206*25\n+81922821232", "", null, []],
+  ["13:00–15:00", "唐津城", "營業時間：\n09:00–17:00", "唐津城", "", "唐津城收費停車場\nMapcode：182 402 737*30\n+81955748887", "", null, []],
   ["", "↓ 交通 1 小時", "", "", "", "", "drive", null, []],
-  ["18:00", "本格迴轉壽司 大河壽司", "營業時間：\n11:20–21:00", "大河寿司 福岡", "", "本格迴轉壽司 大河壽司\nMapcode：13 235 468*50\n+81925045000", "meal", null, []],
-  ["", "↓", "", "", "", "", "drive", null, []],
-  ["", "住宿(福岡)", "", "", "", "", "stay", 2, []],
+  ["16:00–16:30", "手工花鹽布丁", "營業時間：\n10:00–17:00\n專用停車場平日免費，週末及假日收費300日圓，\n停車場停滿後引導前往隔壁的漁業合作社停車場，\n該停車場全天收費300日元。", "またいちの塩 製塩所 糸島", "", "またいちの塩 製塩所 専用駐車場\nMapcode：182 866 581*43\n+819071588931", "", null, []],
+  ["", "↓ 交通 30 分鐘", "", "", "", "", "drive", null, []],
+  ["17:00–17:30", "桜井二見ヶ浦 夫婦岩", "", "桜井二見ヶ浦 夫婦岩", "", "糸島市二見ヶ浦駐車場\nMapcode：224 788 206*25\n+81922821232\n60分/300円", "", null, []],
+  ["", "↓ 交通 40 分鐘", "", "", "", "", "drive", null, []],
+  ["18:10", "本格迴轉壽司 大河壽司", "營業時間：\n11:20–21:00", "大河寿司 福岡", "", "本格迴轉壽司 大河壽司\nMapcode：13 235 468*50\n+81925045000", "meal", null, []],
+  ["", "↓ 交通 10 分鐘", "", "", "", "", "drive", null, []],
+  ["", "住宿(福岡)", "", "", "", "Mapcode：13 144 707*08", "stay", 2, []],
  ]},
  {e:"🛍️", d:"10/16 五", t:"D6 · 福岡市區", items:[
   ["", "住宿(福岡)", "", "", "", "", "stay", 2, []],
-  ["", "↓ 交通 30 分鐘", "", "", "", "", "drive", null, []],
+  ["", "↓ 交通 20 分鐘", "", "", "", "", "drive", null, []],
   ["", "天神地下街", "營業時間：\n10:00–20:00", "天神地下街", "https://www.tenchika.com/", "天神ＣＢパーク\nMapcode：13 317 684*66\n+81924740001\n08:00–20:00\n30分/200円\n最大料金1600円\n20:00–08:00\n60分/200円\n最大料金800円", "", null, []],
   ["", "福岡PARCO", "營業時間：\n10:00–20:30\n7F 8F", "福岡PARCO", "https://tw.fukuoka.parco.jp/?_gl=1*4phthu*_gcl_au*MjM3MTk5NDIzLjE3OTEwMzg2NDU.", "↑限高2.2m↑\n半室內，車位沒這麼多，評論說不好停？", "", null, []],
   ["", "博多マルイ大樓", "營業時間：\n10:00–21:00\n6F 7F", "博多マルイ", "https://www.0101.co.jp/090/", "↓限高2.1m↓\n全室內，車位很多，沒車位要開到4-5樓", "", null, []],
-  ["", "午餐：大名黑豚吉列豬扒", "營業時間：\n11:00–14:30\n17:00–19:30", "大名 黒豚 とんかつ", "", "Ankoku Parking Lot\nMapcode：13 317 774*48\n+81927167128\n07:00–19:00\n30分/200円\n最大料金1800円\n19:00–24:00\n30分/200円\n最大料金600円", "meal", null, []],
+  ["", "午餐：大名黑豚吉列豬扒", "營業時間：\n11:00–14:30\n17:00–19:30", "大名 黒豚 とんかつ", "", "Ankoku Parking Lot\nMapcode：13 317 774*48\n+81927167128\n07:00–19:00\n30分/200円\n最大料金1800円\n19:00–24:00\n30分/200円\n最大料金600円\n24:00–07:00\n30分/200円\n最大料金600円", "meal", null, []],
   ["", "晚餐：天神屋台", "", "天神 屋台", "", "", "meal", null, []],
-  ["", "↓", "", "", "", "", "drive", null, []],
-  ["", "住宿(福岡)", "", "", "", "", "stay", 2, []],
+  ["", "↓ 交通 20 分鐘", "", "", "", "", "drive", null, []],
+  ["", "住宿(福岡)", "", "", "", "Mapcode：13 144 707*08", "stay", 2, []],
  ]},
  {e:"👜", d:"10/17 六", t:"D7 · 鳥栖 OUTLETS", items:[
   ["", "住宿(福岡)", "", "", "", "", "stay", 2, []],
   ["", "↓ 交通 20 分鐘", "", "", "", "", "drive", null, []],
-  ["", "博多運河城", "營業時間：\n10:00–20:00\n地面停車場的高度限制不到2.0米\n(一部分車室不滿1.9米)\n地下停車場的高度限制不到2.1米\n(一部分車室不滿2.0米)", "キャナルシティ博多", "", "キャナルシティ地上駐車場 入口\nMapcode：13 319 351*11\nキャナルシティパーキング 地下駐車場入口\nMapcode：13 319 435*15", "", null, []],
+  ["", "博多運河城", "營業時間：\n10:00–20:00\n地面停車場的高度限制不到2.0米\n(一部分車室不滿1.9米)\n地下停車場的高度限制不到2.1米\n(一部分車室不滿2.0米)", "キャナルシティ博多", "", "キャナルシティ地上駐車場 入口\nMapcode：13 319 351*11\n60分/300円\nキャナルシティパーキング 地下駐車場入口\nMapcode：13 319 435*15", "", null, []],
   ["", "↓ 交通 40 分鐘", "", "", "", "", "drive", null, []],
-  ["", "鳥栖PREMIUM OUTLETS", "營業時間：\n10:00–20:00\nP3停車場：室外平面、離服務中心最近\nP4停車場：室內立體、遮陽防雨　　　\n都有空橋，差在車子高度限制和遮陽防雨", "鳥栖プレミアム・アウトレット", "https://www.premiumoutlets.co.jp/cht/tosu/", "Tosupuremiamuautoretto Dai 3\nMapcode：37 856 284*34", "", null, []],
-  ["", "午餐：麵屋兼虎", "營業時間：\n10:00–22:00", "麺屋兼虎 鳥栖", "", "Tosupuremiamuautoretto Dai 4 Chushajo\nMapcode：37 856 166*75", "meal", null, []],
+  ["", "鳥栖PREMIUM OUTLETS", "營業時間：\n10:00–20:00\nP3停車場：室外平面、離服務中心最近\nP4停車場：室內立體、限高2.1、遮陽防雨\n都有空橋，差在車子高度限制和遮陽防雨", "鳥栖プレミアム・アウトレット", "https://www.premiumoutlets.co.jp/cht/tosu/", "鳥栖プレミアムアウトレット 第3駐車場\nMapcode：37 856 284*34", "", null, []],
+  ["", "午餐：麵屋兼虎", "營業時間：\n10:00–22:00", "麺屋兼虎 鳥栖", "", "鳥栖プレミアムアウトレット 第4駐車場\nMapcode：37 856 166*75", "meal", null, []],
   ["", "↓", "", "", "", "", "drive", null, []],
   ["", "晚餐", "", "鳥栖 レストラン", "", "", "meal", null, []],
   ["", "↓", "", "", "", "", "drive", null, []],
-  ["", "住宿(鳥栖)", "", "", "", "", "stay", 3, []],
+  ["", "住宿(鳥栖)", "", "", "", "Mapcode：37 707 293*3", "stay", 3, []],
  ]},
  {e:"🏠", d:"10/18 日", t:"D8 · 返台", items:[
   ["08:00", "住宿(鳥栖)", "", "", "", "", "stay", 3, []],
   ["", "↓ 交通 1 小時", "", "", "", "", "drive", null, []],
-  ["09:00", "TOYOTA Rent a Car\nトヨタレンタカー 佐賀空港店", "營業時間：\n09:00–19:00", "", "", "TOYOTA Rent a Car\nMapcode：688 231 894*63\n+81952460120", "car", "return", []],
+  ["09:00–09:30", "TOYOTA Rent a Car\nトヨタレンタカー 佐賀空港店", "營業時間：\n09:00–19:00\n加油站：PETRAS 佐賀店\nMapcode：87 202 091*71\n+81952347827\n加油站：cosmo AIステーションセルフ佐賀南\nMapcode：87 261 270*42\n+81952285530", "", "", "TOYOTA Rent a Car\nMapcode：688 231 894*63\n+81952460120", "car", "return", []],
   ["", "↓", "", "", "", "", "drive", null, []],
   ["09:30", "機場報到", "", "佐賀空港", "", "", "", null, []],
   ["11:35-13:05", "佐賀機場-桃園機場", "", "佐賀空港", "", "", "", null, []],
@@ -370,19 +389,25 @@ addEventListener("resize",layout);layout();
 // 每個群組：[建物名稱, 地圖搜尋字, [[樓層, 店名, 備註, 個別搜尋字(可省略)], ...]]
 const WL = [
   {day:"10/16（五）", area:"天神", hint:"D6 天神地下街・福岡 PARCO 當天", groups:[
-    ["福岡 PARCO","福岡PARCO",[["6F","藍色監獄"],["7F","ONE PIECE"],["7F","Gashapon 扭蛋"],["8F","Animate","敗北女角","",["💖 威龍最愛：敗北女角活動","https://fukuoka-otaku.net/makeine-yumekawa-fair-2026/?srsltid=AU7gw4W3OdbuNkranDPj2XBYYQBNgtL1N_myVTVOIGVLTFijMaR9Dg-3"]]]],
-    ["solaria stage","ソラリアステージ 天神",[["2F","gashacoco 扭蛋"]]],
-    ["天神周邊","天神",[["","#C-pla 扭蛋","","C-pla 天神"],["","Animega × Sofmap","","アニメガ ソフマップ 天神"],["","鳴潮 GIGO","","https://maps.app.goo.gl/Cf96zuLdBHk2zbWi9",["💖 威龍最愛：鳴潮活動","https://www.haveagood-holiday.com/zh-TW/articles/wuthering-waves-gigo-campaign-2026?srsltid=AU7gw4VWb3f9S1bx76D6T7LMFWWpLgH1LON1WXQPrF0ijhG7hOrHEoZ5"]],["","Taito Station","","タイトーステーション 天神"],["","Round 1","","ラウンドワン 天神"],["","指南針","","https://maps.app.goo.gl/xHt4bbaids5a8CJH8"]]],
-    ["卡店","天神",[["","MINT FUKUOKA PARCO","","MINT 福岡PARCO"],["","Surugaya Shintencho Treka-kan","","駿河屋 新天町 トレカ館"],["","Yellow Submarine Magiccers","","イエローサブマリン マジッカーズ 福岡天神"],["","フルコンプ 福岡天神店"],["","カードラボ 福岡天神店"]]],
+    ["福岡 PARCO","福岡PARCO",[["6F","藍色監獄"],["7F","ONE PIECE"],["7F","@gacha Gashapon"],["8F","Animate","敗北女角","",["💖 威龍最愛：敗北女角活動","https://fukuoka-otaku.net/makeine-yumekawa-fair-2026/?srsltid=AU7gw4W3OdbuNkranDPj2XBYYQBNgtL1N_myVTVOIGVLTFijMaR9Dg-3"]]]],
+    ["solaria stage","ソラリアステージ 天神",[["2F","@gacha gashacoco"]]],
+    ["天神周邊","天神",[["","@gacha #C-pla","","C-pla 天神"],["","Animega × Sofmap","","アニメガ ソフマップ 天神"],["","@claw GIGO","","https://maps.app.goo.gl/Cf96zuLdBHk2zbWi9",["💖 威龍最愛：鳴潮活動","https://www.haveagood-holiday.com/zh-TW/articles/wuthering-waves-gigo-campaign-2026?srsltid=AU7gw4VWb3f9S1bx76D6T7LMFWWpLgH1LON1WXQPrF0ijhG7hOrHEoZ5"]],["","@claw Taito Station","","タイトーステーション 天神"],["","@claw Round 1","","ラウンドワン 天神"],["","指南針","","https://maps.app.goo.gl/xHt4bbaids5a8CJH8"]]],
+    ["卡店","天神",[["","MINT FUKUOKA PARCO","","MINT 福岡PARCO"],["","Surugaya Shintencho Treka-kan","","駿河屋 新天町 トレカ館"],["","Yellow Submarine Magiccers","","イエローサブマリン マジッカーズ 福岡天神"],["","FULLCOMP","フルコンプ 福岡天神店","フルコンプ 福岡天神店"],["","C-labo","カードラボ 福岡天神店","カードラボ 福岡天神店"]]],
   ]},
   {day:"10/16（五）", area:"博多車站", hint:"D6 博多マルイ 當天", groups:[
     ["博多マルイ","博多マルイ",[["7F","我英 十周年","","博多マルイ"],["7F","小圓","","博多マルイ"]]],
   ]},
   {day:"10/17（六）", area:"博多運河城", hint:"D7 博多運河城 當天", groups:[
-    ["博多運河城 B1","キャナルシティ博多",[["B1","Jump shop"],["B1","Bandai Candy"],["B1","Bandai Namco","家教 20th","",["💖 威龍最愛：家庭教師活動","https://bandainamco-am.co.jp/crossstore/store/hakata-canalcity/news/20260610.html"]],["B1","Gashapon 扭蛋","","https://maps.app.goo.gl/S3RipFcWHobz6kHh6"],["B1","Megahouse","","キャナルシティ博多"],["B1","Tree village"]]],
+    ["博多運河城","キャナルシティ博多",[["B1","Jump shop"],["B1","Bandai Candy"],["B1","Bandai Namco","家教 20th","",["💖 威龍最愛：家庭教師活動","https://bandainamco-am.co.jp/crossstore/store/hakata-canalcity/news/20260610.html"]],["B1","@gacha Gashapon","","https://maps.app.goo.gl/S3RipFcWHobz6kHh6"],["B1","Megahouse","","キャナルシティ博多"],["B1","Tree village"]]],
     ["Zone8","https://maps.app.goo.gl/J9XiSYN7qVyvHf8J9",[["","進擊的巨人","","https://maps.app.goo.gl/J9XiSYN7qVyvHf8J9"],["","藍色監獄","","https://maps.app.goo.gl/J9XiSYN7qVyvHf8J9"]]],
   ]},
 ];
+// 店名前綴 "@claw " / "@gacha " 會換成小圖示
+const ICONS = {
+  claw:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5h18M12 2.5V7"/><rect x="8.5" y="7" width="7" height="4.5" rx="1.5" fill="currentColor"/><path d="M9 11.5C4 12.5 3.5 18 7.5 21M15 11.5c5 1 5.5 6.5 1.5 9.5M12 11.5V17"/></svg>',
+  gacha:'<svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5" fill="#fff"/><path d="M2.5 12a9.5 9.5 0 0 1 19 0z" fill="#ff9aa2"/><path d="M7 8a6 6 0 0 1 3-2" fill="none" stroke="#fff" stroke-linecap="round"/></svg>'
+};
+const nameHtml = n => { const m = n.match(/^@(\w+) (.*)$/); return m && ICONS[m[1]] ? `<span class="ic">${ICONS[m[1]]}</span>${esc(m[2])}` : esc(n); };
 const WLKEY = "wl-done";
 let wlDone = {};
 try{ wlDone = JSON.parse(localStorage.getItem(WLKEY)||"{}") }catch(e){}
@@ -392,21 +417,40 @@ function renderWL(){
   let id = 0;
   document.getElementById("wlpage").innerHTML = `
   <div class="day-hero"><div class="day-hero-top"><div class="day-emoji"><span class="dragon big">🐉</span></div><div><h2>威龍的朝聖清單</h2><p>10/16 天神・博多車站　10/17 博多運河城</p></div></div>
-    <div class="prog"><div class="bar"><i style="width:${wlTotal?done/wlTotal*100:0}%"></i></div><span>已打卡 ${done} / ${wlTotal}</span></div></div>` +
+    <div class="prog"><div class="bar"><i style="width:${wlTotal?done/wlTotal*100:0}%"></i></div><span>已打卡 ${done} / ${wlTotal}</span></div><button class="goal-btn" data-goal>🎯 威龍此次目標</button></div>` +
   WL.map(sec=>`
     <div class="wl-sec"><div class="wl-head"><span class="tag">📅 ${esc(sec.day)}</span><h3>${esc(sec.area)}</h3></div><div class="wl-hint">${esc(sec.hint)}</div>` +
     sec.groups.map(([b,bq,items])=>`
       <div class="wl-group"><div class="wl-gh"><span>${esc(b)}</span>${mapBtn(mapUrl(bq),"地圖")}</div>` +
       items.map(([fl,name,note,iq0,fav])=>{
-        const iq = iq0 || (bq==="天神" ? name+" 天神" : bq+" "+name);
+        const plain = name.replace(/^@\w+ /,"");
+        const iq = iq0 || (bq==="天神" ? plain+" 天神" : bq+" "+plain);
         const k = "i"+(id++), on = !!wlDone[k];
         return `<label class="wl-item${on?" done":""}"><input type="checkbox" data-k="${k}" ${on?"checked":""}>
           <span class="box"></span>
           ${fl?`<span class="fl">${esc(fl)}</span>`:""}
-          <span class="nm">${esc(name)}${note?`<small>${esc(note)}</small>`:""}${fav?`<a class="fav" href="${esc(fav[1])}" target="_blank" rel="noopener">${esc(fav[0])}</a>`:""}</span>
+          <span class="nm">${nameHtml(name)}${note?`<small>${esc(note)}</small>`:""}${fav?`<a class="fav" href="${esc(fav[1])}" target="_blank" rel="noopener">${esc(fav[0])}</a>`:""}</span>
           ${iq?`<a class="mini" href="${esc(mapUrl(iq))}" target="_blank" rel="noopener" title="Google 地圖">📍</a>`:""}</label>`;
       }).join("") + `</div>`).join("") + `</div>`).join("");
 }
+// 威龍此次目標（圖片放在 202610福岡/）
+const GOAL_DIR = "202610福岡/";
+const GOAL_CARDS = [
+  ["BLEACH 千年血戰", [["c1.png","EX15BT/BLC-4-AP01★"],["c2.png","EX15BT/BLC-4-AP02★"]]],
+  ["Re:ZERO", [["c3.png","UA40BT/REZ-1-AP01★"],["c4.png","UA40BT/REZ-1-AP02★"]]],
+  ["無職轉生", [["c5.png","UA54BT/MST-1-AP01★"],["c6.png","UA54BT/MST-1-AP02★"]]],
+  ["浪客劍心", [["c7.png","UA41BT/RNK-1-AP01★"]]],
+];
+const GOAL_GACHA = [["b1.jpg","俺だけレベルアップな件 Collection Figure Rich"]];
+const goalFig = ([f,c]) => `<figure><img src="${GOAL_DIR+encodeURI(f)}" alt="${esc(c)}" loading="lazy">${esc(c)}</figure>`;
+document.getElementById("goalbody").innerHTML =
+  `<div class="ov-h">🃏 想抽的卡片（UNION ARENA）</div>` +
+  GOAL_CARDS.map(([t,l])=>`<div class="wl-hint" style="margin-top:12px">${esc(t)}</div><div class="goal-cards">${l.map(goalFig).join("")}</div>`).join("") +
+  `<div class="ov-h" style="margin-top:20px">${'<span class="ic" style="display:inline-block;width:1.15em;height:1.15em;vertical-align:-.2em;margin-right:5px">'}${ICONS.gacha}</span>想扭的扭蛋</div><div class="goal-cards one" style="margin-top:8px">${GOAL_GACHA.map(goalFig).join("")}</div>`;
+const goal = document.getElementById("goal");
+document.getElementById("wlpage").addEventListener("click",e=>{ if(e.target.closest("[data-goal]")) goal.classList.add("on") });
+goal.addEventListener("click",e=>{ if(e.target===goal||e.target.closest("[data-close]")) goal.classList.remove("on") });
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") goal.classList.remove("on") });
 document.getElementById("wlpage").addEventListener("change",e=>{
   const c=e.target.closest("input[data-k]"); if(!c)return;
   wlDone[c.dataset.k]=c.checked;
