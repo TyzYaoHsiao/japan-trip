@@ -243,8 +243,7 @@ const DAYS = [
   ["", "↓ 交通 30 分鐘", "", "", "", "", "drive", null, []],
   ["13:00–15:00", "長崎企鵝水族館", "營業時間：\n09:00–17:00", "長崎ペンギン水族館", "https://penguin-aqua.jp/", "長崎ペンギン水族館第１駐車場\nMapcode：44 308 465*04\n+81958383131\n第一小時260円\n後續60分/200円", "", null, []],
   ["", "↓ 交通 30 分鐘", "", "", "", "", "drive", null, []],
-  ["15:30–18:30", "長崎浜町商店街", "", "長崎 浜町アーケード", "", "思案橋停車場\nMapcode：44 240 657*60\n+81958260379\n07:00–20:00\n30分/150円\n最大料金1000円\n20:00–07:00\n30分/150円\n最大料金800円", "", null, []],
-  ["18:30", "晚餐", "", "長崎 浜町 レストラン", "", "", "meal", null, []],
+  ["15:30–18:30", "長崎浜町商店街", "含晚餐（商店街周邊用餐）", "長崎 浜町アーケード", "", "思案橋停車場\nMapcode：44 240 657*60\n+81958260379\n07:00–20:00\n30分/150円\n最大料金1000円\n20:00–07:00\n30分/150円\n最大料金800円", "", null, []],
   ["", "↓ 交通 20 分鐘", "", "", "", "", "drive", null, []],
   ["18:50", "稻佐山山頂展望台", "營業時間：\n09:00–22:00\n半山腰→軌道車→展望台，軌道車來回500日圓\n淵神社→纜車→展望台，纜車來回1900日圓\n恢復運行→", "稲佐山山頂展望台", "https://inasayama.info/", "稲佐山公園駐車場\nMapcode：262 028 582*76", "", null, [["2026年10月3日（星期六）- B線（長崎港側）", "https://inasayama.info/20261003-2/"]]],
   ["", "↓ 交通 15 分鐘", "", "", "", "", "drive", null, []],
@@ -436,16 +435,19 @@ function renderWL(){
 // 威龍此次目標（圖片放在 202610福岡/）
 const GOAL_DIR = "202610福岡/";
 const GOAL_CARDS = [
-  ["BLEACH 千年血戰", [["c1.png","EX15BT/BLC-4-AP01★"],["c2.png","EX15BT/BLC-4-AP02★"]]],
-  ["Re:ZERO", [["c3.png","UA40BT/REZ-1-AP01★"],["c4.png","UA40BT/REZ-1-AP02★"]]],
-  ["無職轉生", [["c5.png","UA54BT/MST-1-AP01★"],["c6.png","UA54BT/MST-1-AP02★"]]],
-  ["浪客劍心", [["c7.png","UA41BT/RNK-1-AP01★"]]],
+  ["BLEACH 千年血戰", [["c1.png","EX15BT/BLC-4-AP01★"],["c2.png","EX15BT/BLC-4-AP02★"]], "https://www.unionarena-tcg.com/tc/products/boosters/ex_blc-3.php"],
+  ["Re:ZERO", [["c3.png","UA40BT/REZ-1-AP01★"],["c4.png","UA40BT/REZ-1-AP02★"]], "https://www.unionarena-tcg.com/tc/products/boosters/rez-1.php"],
+  ["無職轉生", [["c5.png","UA54BT/MST-1-AP01★"],["c6.png","UA54BT/MST-1-AP02★"]], "https://www.unionarena-tcg.com/tc/products/boosters/mst-1.php"],
+  ["浪客劍心", [["c7.png","UA41BT/RNK-1-AP01★"]], "https://www.unionarena-tcg.com/tc/products/boosters/rnk-1.php"],
 ];
-const GOAL_GACHA = [["b1.jpg","俺だけレベルアップな件 Collection Figure Rich"]];
-const goalFig = ([f,c]) => `<figure><img src="${GOAL_DIR+encodeURI(f)}" alt="${esc(c)}" loading="lazy">${esc(c)}</figure>`;
+const GOAL_GACHA = [["b1.jpg","俺だけレベルアップな件 Collection Figure Rich","https://capsule.bushiroad-creative.com/product/9897/"],["b2.jpg","點圖看商品連結","https://www.toy-people.com/?p=113853"]];
+const goalFig = ([f,c,u]) => {
+  const img = `<img src="${GOAL_DIR+encodeURI(f)}" alt="${esc(c)}" loading="lazy">`;
+  return `<figure>${u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${img}</a>` : img}${esc(c)}${u ? ` <a href="${esc(u)}" target="_blank" rel="noopener">🔗 連結</a>` : ""}</figure>`;
+};
 document.getElementById("goalbody").innerHTML =
   `<div class="ov-h">🃏 想抽的卡片（UNION ARENA）</div>` +
-  GOAL_CARDS.map(([t,l])=>`<div class="wl-hint" style="margin-top:12px">${esc(t)}</div><div class="goal-cards">${l.map(goalFig).join("")}</div>`).join("") +
+  GOAL_CARDS.map(([t,l,u])=>`<div class="wl-hint" style="margin-top:12px">${esc(t)}${u?` <a href="${esc(u)}" target="_blank" rel="noopener">🔗 連結</a>`:""}</div><div class="goal-cards">${l.map(goalFig).join("")}</div>`).join("") +
   `<div class="ov-h" style="margin-top:20px">${'<span class="ic" style="display:inline-block;width:1.15em;height:1.15em;vertical-align:-.2em;margin-right:5px">'}${ICONS.gacha}</span>想扭的扭蛋</div><div class="goal-cards one" style="margin-top:8px">${GOAL_GACHA.map(goalFig).join("")}</div>`;
 const goal = document.getElementById("goal");
 document.getElementById("wlpage").addEventListener("click",e=>{ if(e.target.closest("[data-goal]")) goal.classList.add("on") });
